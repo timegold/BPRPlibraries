@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+   <html>    
+      <head>      
+         <title>HTMLFont size</title>    
+      </head>    
+      <body>      
+
+<br> 
+To retrive the Gaia data, there are several server available across Europe.
+Institut für Astrophysik Potsdam (AIP), Astronomisches Rechen-Institut (ARI), 
+ASI Space Science Data Centre (ASI SSDC) and Centre de Données astronomiques de Strasbourg (CDS).
+<br> 
+https://www.cosmos.esa.int/web/gaia/data-access
+<br> 
+<br> 
+<a href="https://gea.esac.esa.int/archive/">ESA archive</a>
+<br> Single object: with immediate plots of the data
+<br> ADQL queries to select from the entire sample your favorite subsample and retrieve your table
+<br> I am able to query very rapidly but only   Gaia tables. Here an example:
+
+
+
+
+
+<p  style="padding: 10px; border: 2px solid red; font-size= 20px">
+import pyvo<br>
+import pandas as pd<br>
+import numpy<br>
+
+tap_service_url = "https://gea.esac.esa.int/tap-server/tap"<br>
+tap_service = pyvo.dal.TAPService(tap_service_url)<br>
+
+query_name = "pippo"<br>
+   query=''' SELECT gaia.source_id,  gaia.parallax_error, gaia.phot_g_mean_mag
+<!--<p  style="margin-left: 40px">      AS  source_id-->
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     FROM  gaiadr3.gaia_source AS gaia 
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     JOIN gaiadr3.tmass_psc_xsc_best_neighbour AS xmatch USING (source_id)
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     JOIN gaiadr3.tmass_psc_xsc_join AS xjoin USING (clean_tmass_psc_xsc_oid)
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     WHERE (
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    (gaia.parallax_over_error > 4  and gaia.phot_g_mean_mag <6 and bp_rp > 2) )'''
+<br>
+job = tap_service.submit_job(query,  runid=query_name, queue="30s")<br>
+job.run()<br>
+<br>
+job.wait(phases=["COMPLETED", "ERROR", "ABORTED"], timeout=30.0)<br>
+print('JOB %s: %s' % (job.job.runid, job.phase))<br>
+<br>
+job.raise_if_error()<br>
+print('\nfetching the results...')<br>
+tap_results = job.fetch_result()<br>
+print('...DONE\n')
+</p>
+
+
+
+
+<br> 
+<a href="https://gaia.ari.uni-heidelberg.de/tap">ARI archive</a>
+<br> ADQL queries to select from the entire sample your favorite subsample and retrieve your table
+<br> I am able to query Gaia tables and 2MASS data. Here an example:
+
+
+<p  style="padding: 10px; border: 2px solid red; font-size= 20px">
+<br> import pyvo
+<br> import pandas as pd
+<br> import numpy
+
+<br> tap_service_url = "https://gaia.ari.uni-heidelberg.de/tap"  
+<br> tap_service = pyvo.dal.TAPService(tap_service_url)
+
+<br> query_name = "pippo"
+<br>
+<br>query=''' SELECT gaia.source_id,  gaia.parallax_error, gaia.phot_g_mean_mag,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   jmag, e_jmag, hmag, e_jmag, kmag, e_kmag, qflg, rflg AS  source_id
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   FROM  gaiadr3.gaia_source AS gaia 
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   JOIN gaiadr3.tmass_psc_xsc_best_neighbour AS xmatch USING (source_id)
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   JOIN gaiadr3.tmass_psc_xsc_join AS xjoin USING (clean_tmass_psc_xsc_oid)
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   JOIN extcat.twomass AS tmass ON
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   xjoin.original_psc_source_id = tmass.mainid
+<br>JOIN gaiadr3.allwise_best_neighbour AS wise USING (source_id)    
+<br>WHERE (
+<br>      gaia.parallax_over_error > 10  and gaia.phot_g_mean_mag < 3 
+<br>       and tmass.kmag < 6 )'''
+<br>
+<br> job = tap_service.submit_job(query,  runid=query_name, queue="30s")
+<br> job.run()
+
+<br> job.wait(phases=["COMPLETED", "ERROR", "ABORTED"], timeout=30.0)
+<br> print('JOB %s: %s' % (job.job.runid, job.phase))
+
+<br> job.raise_if_error()
+<br> print('\nfetching the results...')
+<br> tap_results = job.fetch_result()
+<br> print('...DONE\n')
+
+<br> print(type(tap_results))
+<br> frames1 = (tap_results.to_table().to_pandas(),)  
+<br> df_results = pd.concat(frames1)
+<br> df_results.to_csv('distance_1.csv')
+<br> namecsv='distance_1.csv'
+</p>
+
+
+
+
+
+<br> 
+<a href="https://gaia.aip.de/tap">AIP archive</a>
+<br> ADQL queries to select from the entire sample your favorite 
+subsample and retrieve your table
+<br> I am able to query Gaia tables and 2MASS data, but JOIN does not work. 
+Here an example:
+
+
+<p  style="padding: 10px; border: 2px solid red; font-size= 20px">
+<br> from pkg_resources import parse_version
+<br> import pyvo
+<br> import requests
+<br> import pandas as pd
+<br> import numpy
+
+<br> service_name = "Gaia@AIP"
+<br> url = "https://gaia.aip.de/tap"
+<br> token = 'Token <xxxxxxxx>'
+
+<br> print('TAP service %s \n' % (service_name,))
+
+<br> tap_session = requests.Session()
+<br> tap_session.headers['Authorization'] = token
+
+<br> tap_service = pyvo.dal.TAPService(url, session=tap_session)
+
+
+<br> query_name = "tgas_stars"
+<br> lang = 'ADQL'
+<br> query=''' SELECT designation, h_m
+<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   FROM  catalogs.tmass AS tmass 
+<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   WHERE (h_m < 0);'''
+<br> 
+
+<br> job = tap_service.submit_job(query, language=lang, runid=query_name, queue="30s")
+<br> job.run()
+
+<br> job.wait(phases=["COMPLETED", "ERROR", "ABORTED"], timeout=30.0)
+<br> print('JOB %s: %s' % (job.job.runid, job.phase))
+
+<br> job.raise_if_error()
+<br> print('\nfetching the results...')
+tap_results = job.fetch_result()
+print('...DONE\n')
+print(type(tap_results))
+frames1 = (tap_results.to_table().to_pandas(),)  
+df_results = pd.concat(frames1)
+df_results.to_csv('distance_1.csv')
+</p>
+
+
+      </body>
+</html>
