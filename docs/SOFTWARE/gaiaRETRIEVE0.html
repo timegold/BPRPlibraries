@@ -59,6 +59,24 @@ This macro reads the name of a Vizier Catalog (assumed to be IR)
 <br> outputs: eps figures, one per spectrum.
 <br> IT IS a SYNCRON. JOB FOR SMALL TABLES. IN ORDER TO USE YOU MUST TEPLACE THE "user_mmessi01" user account name,
 AND YOU MUST HAVE An ESA/ARCHIVE USER ACCOUNT AND PASSWORD.
-
 <br> 
+
+
+<li>BPRP-Datalink:
+<a href="datalink_BPRP.py">datalink_BPRP.py </a>
+<br> Attention: not all BPRP spectra are given in the SAMPLED.
+<br> Given a list of Gaia DR3 source_IDs,
+<br> it retrieves available SAMPLED BPRP spectra.
+<br> The spectra (one per source_IDs) are saved individually in cvs file and
+<br> also an alltogheter.DTL.csv file (unique) is generated.
+<br> Note that the macro is made by two parts: comment one or the other if you want the alltoghether or the
+<br> individual file.
+<br> Also note that for the bulk retrieval you need an account and password. 
+<br> For the individual retrieval it is not needed (free access).
+
+<li>BPRP-make your own sampling with GaiaXpy:
+<a href="BPRP_defaultsampling.py">defaultsampling_BPRP.py </a>
+<br> Given a list of Gaia DR3 source_IDs,
+<br> it retrieves available continous BPRP spectra and resample them.
+
 </html>
