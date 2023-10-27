@@ -37,10 +37,12 @@ for  i in range(0, nlen):
         wave=sampling.flatten().tolist()  #from nparray to list
         flux=calibrated_spectra['flux'].values #now nparray with ndim=1
         flux=np.hstack(flux).tolist()#from nparray 
+        fluxe=calibrated_spectra['flux_error'].values #now nparray with ndim=1
+        fluxe=np.hstack(fluxe).tolist()#from nparray 
        
-        lala=[wave,flux]
+        lala=[wave,flux,fluxe]
         lala=np.asarray(lala) #make a numpy array from a list
-        columns = ['wave','flux']
+        columns = ['wave','flux','flux_error']
         df = pd.DataFrame(lala.T,columns=columns)
         df.to_csv(namedr3+"A.csv", encoding="utf-8")
         
