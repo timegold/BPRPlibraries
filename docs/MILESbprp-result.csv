@@ -1,4 +1,4 @@
-MILES_id,source_id,phot_g_mean_mag,phot_bp_mean_mag,phot_rp_mean_mag,bp_rp,phot_variable_flag,non_single_star,has_xp_continuous,phot_bp_n_obs,phot_rp_n_obs,namecsv,SIMBAD,bestfitFLAG,ratioR,chiT,chiTadj,rchi2,rchi2adj,rchi2Badj,rchi2Radj
+MILES_id,source_id,phot_g_mean_mag,phot_bp_mean_mag,phot_rp_mean_mag,bp_rp,phot_variable_flag,non_single_star,has_xp_continuous,phot_bp_n_obs,phot_rp_n_obs,namecsv,SIMBAD,bestfitFLAG,ratioT,chiT,rchi2
 2853900872207888768,2853900872207888768,  5.5958757,  5.9115629,  4.9825454,  0.9290175,NOT_AVAILABLE,      0,True, 68, 60,s0001.csv,BIN,  0,   1.01,   0.03,   1.97
 2876698936572615424,2876698936572615424,  5.9299216,  6.2602878,  5.4159098,  0.8443780,NOT_AVAILABLE,      0,True, 42, 36,s0003.csv,BIN,  0,   1.03,   0.05,   3.88
 2861354805129222528,2861354805129222528,  7.7019458,  7.9074483,  7.3423429,  0.5651054,NOT_AVAILABLE,      0,True, 65, 61,s0004.csv,OK,  1,   1.00,   0.04,   2.08
