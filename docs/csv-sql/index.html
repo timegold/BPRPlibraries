@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#000000">
+    <title>CSV SQL Live - Run SQL queries on CSV files right in your web browser</title>
+    <style type="text/css">
+a:hover {
+  cursor: pointer;
+}
+
+footer {
+  margin-bottom: 20px;
+}
+
+/* https://stackoverflow.com/a/45597682/786644 */
+.react-grid-Toolbar {
+  display: none;
+}
+
+/* https://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer/ */
+.full-height {
+  min-height: 100vh;
+}
+.full-width {
+  width: 100%;
+}
+.flex-wrapper {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+.above-footer {
+  flex: 1;
+}
+    </style>
+  </head>
+  <body class="full-height">
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
+    <div class="full-height" id="root"></div>
+  </body>
+
+  <script>
+  
+    if (location.host.indexOf("https://lamortadella.github.io/BPRPlibraries/csv-gsl/") >= 0) {
+      var s = document.createElement("script");
+      s.async = true;
+      s.src = "https://www.googletagmanager.com/gtag/js?id=G-LCGWE7V81F";
+      s.type = "text/javascript";
+      document.head.appendChild(s);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-LCGWE7V81F');
+  }  
+
+      
+      let d = new Date();
+      alert("Today's date is " + d);
+      
+  </script>
+
+</html>
