@@ -31,5 +31,5 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "homepage": "http://lamortadella.github.io/csv-sql-live"
+  "homepage": "http://lamortadella.github.io/BPRPlibraries/csv-sql"
 }
